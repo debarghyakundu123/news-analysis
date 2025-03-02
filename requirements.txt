@@ -1,0 +1,13 @@
+streamlit
+numpy
+pandas
+matplotlib
+seaborn
+requests
+bs4
+sentence-transformers
+faiss-cpu
+wordcloud
+scikit-learn
+python-dotenv
+groq
