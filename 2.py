@@ -317,6 +317,44 @@ if page == "Home":
         with open(INS_PATH, "w", encoding="utf-8") as f:
             json.dump(insights, f, indent=2)
         st.success("Done processing")
+                st.markdown("---")
+        st.subheader("Ask a Question Based on the Articles")
+
+        user_q = st.text_input("Enter your question:", key="user_question_box")
+        ask_btn = st.button("Generate Answer")
+
+        if ask_btn and user_q.strip():
+            try:
+                # Build a context from the scraped articles
+                context = ""
+                for i, a in enumerate(arts):
+                    context += f"Article {i+1}: {a[:800].replace(chr(10),' ')}\n"
+
+                prompt_q = (
+                    "You are a research assistant. Answer the user's question ONLY "
+                    "based on the given articles. Provide a clear, factual answer.\n\n"
+                    f"ARTICLES:\n{context}\n\n"
+                    f"QUESTION: {user_q}\n"
+                    "ANSWER:"
+                )
+
+                if groq_client:
+                    resp = groq_client.chat.completions.create(
+                        model="llama-3.3-70b-versatile",
+                        messages=[{"role": "system", "content": "You are helpful and factual."},
+                                  {"role": "user", "content": prompt_q}],
+                        max_tokens=350
+                    )
+                    answer = resp.choices[0].message.content.strip()
+                else:
+                    answer = "Groq not configured. Cannot generate answer."
+
+                st.subheader("Answer:")
+                st.write(answer)
+
+            except Exception as e:
+                st.error(f"Error generating answer: {e}")
+
 
 elif page == "Graphs & Insights":
     st.title("Graphs & Insights")
