@@ -317,7 +317,8 @@ if page == "Home":
         with open(INS_PATH, "w", encoding="utf-8") as f:
             json.dump(insights, f, indent=2)
         st.success("Done processing")
-                st.markdown("---")
+        
+        st.markdown("---")
         st.subheader("Ask a Question Based on the Articles")
 
         user_q = st.text_input("Enter your question:", key="user_question_box")
