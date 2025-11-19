@@ -26,4 +26,5 @@ seaborn
 pickle-mixin
 pandas
 spacy
+langdetect
 
