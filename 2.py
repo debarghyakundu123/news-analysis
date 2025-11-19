@@ -455,3 +455,4 @@ elif page == "Research Paper":
     Generated at: {datetime.utcnow().isoformat()}
     """
     st.download_button("Download research summary (.txt)", research_summary, file_name="research_summary.txt")
+     
